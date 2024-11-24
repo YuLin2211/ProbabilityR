@@ -116,6 +116,17 @@ ggplot(final_table, aes(x = reorder(Club, -AvgPoints), y = AvgPoints)) +
 
 
 
+#finalScoreTable
+finalScoresTable <- finalScores[order(-finalScores$Score), ]  # Sort by Score descending
+ggplot(finalScoresTable, aes(x = reorder(Club, -Score), y = Score)) +
+  geom_bar(stat = "identity", fill = "lightblue") +
+  coord_flip() +
+  ggtitle("Final Predicted Scores for Each Team") +
+  xlab("Team") +
+  ylab("Final Predicted Score") +
+  theme_minimal()
+
+
 # Prepare data for boxplot
 boxplot_data <- data.frame(
   Team = rep(rownames(all_results), each = num_simulations),
@@ -129,6 +140,21 @@ ggplot(boxplot_data, aes(x = reorder(Team, -Points), y = Points)) +
   ylab("Points") +
   theme_minimal()
 
+# Prepare attack vs defense data
+attack_defense_data <- data.frame(
+  Team = teamStats$Club,
+  Attack = teamStats$Attack,
+  Defense = teamStats$Defense
+)
+
+# Plot
+ggplot(attack_defense_data, aes(x = Attack, y = Defense, label = Team)) +
+  geom_point(size = 4, color = "black") +
+  geom_text(vjust = -1, size = 3) +
+  ggtitle("Attack vs Defense Comparison") +
+  xlab("Attacking Strength") +
+  ylab("Defensive Strength") +
+  theme_minimal()
 
 
 
