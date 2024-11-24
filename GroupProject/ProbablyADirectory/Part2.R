@@ -116,5 +116,19 @@ ggplot(final_table, aes(x = reorder(Club, -AvgPoints), y = AvgPoints)) +
 
 
 
+# Prepare data for boxplot
+boxplot_data <- data.frame(
+  Team = rep(rownames(all_results), each = num_simulations),
+  Points = as.vector(all_results)
+)
+ggplot(boxplot_data, aes(x = reorder(Team, -Points), y = Points)) +
+  geom_boxplot(fill = "red", color = "black") +
+  coord_flip() +
+  ggtitle("Distribution of Simulated Points for Each Team") +
+  xlab("Team") +
+  ylab("Points") +
+  theme_minimal()
+
+
 
 
